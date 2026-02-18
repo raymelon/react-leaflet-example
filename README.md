@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+# React Leaflet Example
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Legacy Create React App project (around 2019) using `react-scripts@4.0.1`.
 
-## Available Scripts
+## Status in 2026
 
-In the project directory, you can run:
+This repository can still run in 2026, but it requires a compatible Node/npm setup and a small startup workaround on machines where a parent `node_modules` folder contains `webpack@5`.
 
-### `npm start`
+## Runtime setup (nvm-windows)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Use Node 16 for this repo.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+nvm install 16.20.2
+nvm use 16.20.2
+node -v
+npm -v
+```
 
-### `npm test`
+Expected output:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `node -v` -> `v16.20.2`
+- `npm -v` -> `8.x`
 
-### `npm run build`
+## Clean install
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This project currently uses npm. If lockfiles are mixed or stale, clean first.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```powershell
+Remove-Item -Recurse -Force .\node_modules
+Remove-Item -Force .\package-lock.json
+Remove-Item -Force .\yarn.lock
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Install with legacy peer handling (needed for old CRA dependency constraints):
 
-### `npm run eject`
+```bash
+npm install --legacy-peer-deps
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Start the app
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+If you get this preflight error:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- `A different version of webpack was detected higher up in the tree`
+- Example path: `C:\Users\<you>\node_modules\webpack`
 
-## Learn More
+use a session-only bypass:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```powershell
+$env:SKIP_PREFLIGHT_CHECK='true'; npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This does not modify global Node modules and only affects the current terminal session.
 
-### Code Splitting
+## Safer long-term workaround (recommended)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Avoid running the repo under a parent folder that has a shared `node_modules`.
 
-### Analyzing the Bundle Size
+Recommended options:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. Move/clone the repo to a root-level dev path (example: `C:\dev\react-leaflet-example`).
+2. Or mount the project as a virtual drive:
 
-### Making a Progressive Web App
+```powershell
+subst X: "C:\Users\raymel\Documents\Sides\NababahaPH\poc\react-leaflet-example"
+X:
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Both options avoid global mutations and reduce dependency-tree contamination from parent directories.
 
-### Advanced Configuration
+## Notes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- `npm WARN deprecated ...` is expected for this legacy stack.
+- `npm audit` vulnerabilities are expected; do not run `npm audit fix --force` unless you are intentionally upgrading and testing breakages.
 
-### Deployment
+## Troubleshooting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+For common install/startup failures and copy-paste fixes, see `docs/troubleshooting.md`.
 
-### `npm run build` fails to minify
+## Scripts
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+In the project directory:
+
+- `npm start` - run dev server
+- `npm test` - run tests
+- `npm run build` - production build

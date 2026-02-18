@@ -1,4 +1,84 @@
-
 .map__container {
   width: 100vw;
+}
+
+.map-popup {
+  font-family: "Segoe UI", sans-serif;
+  max-width: 280px;
+}
+
+.map-popup__eyebrow {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: #4a6a74;
+  font-weight: 700;
+}
+
+.map-popup__title {
+  margin: 0.25rem 0 0;
+  font-size: 1rem;
+  color: #0f2d3a;
+}
+
+.map-popup__headline {
+  margin: 0.45rem 0 0;
+  font-size: 0.86rem;
+  line-height: 1.35;
+  color: #28444d;
+}
+
+.map-popup__stats {
+  margin-top: 0.65rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 0.5rem;
+  background: #eef8fb;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  color: #18414e;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.map-popup__actions {
+  margin-top: 0.7rem;
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.map-popup__actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: white;
+  background: #1b7f95;
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+}
+
+.map-popup__actions a:last-child {
+  background: #cc5a34;
+}
+
+.map-popup--you-are-here {
+  max-width: 280px;
+}
+
+.map-popup--you-are-here-shell .leaflet-popup-content-wrapper {
+  background: linear-gradient(145deg, #ffedd2, #ffe1ae);
+  border: 2px solid #f28f3b;
+}
+
+.map-popup--you-are-here .map-popup__title {
+  font-size: 1rem;
+  color: #8a2d0c;
+}
+
+.map-popup--you-are-here .map-popup__eyebrow {
+  color: #8a2d0c;
 }
